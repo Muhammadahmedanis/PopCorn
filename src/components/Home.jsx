@@ -7,9 +7,11 @@ function Home(){
   return(
     <>
       <Header />
-      <MovieList />
-      <MovieWatch />
-      
+      <div className='flex justify-center gap-3 mt-6'>
+        <MovieList />
+        <MovieWatch />
+      </div>
+
     </>
   )
 }
