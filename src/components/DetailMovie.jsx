@@ -1,33 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaStar } from "react-icons/fa6";
-import { FaRegStar } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa6";
 
-function DetailMovie(){
-    const starBar = ["✰", "✰", "✰", "✰", "✰", "✰", "✰", "✰", "✰", "✰"]
+function DetailMovie({setIsHideWatchMovie, setUserRating, showSelectWatchMovie}){
+    const starBar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; 
+    const[hoverindex, setHoverIndex] = useState(null);
+    const[selectRateing, setSelectRating] = useState(0)
+    const[showBtn, setShowBtn] = useState(false);
+    const {Title, Poster, Released, Runtime, Genre, imdbRating} = showSelectWatchMovie
     return(
         <>
-        <div className="flex items-center gap-6 bg-[#706d6d4d] rounded-tl-lg">
-            <div className="h-auto w-24 ">
-                <img className="rounded-tl-lg" src="https://m.media-amazon.com/images/M/MV5BMjE0NGIwM2EtZjQxZi00ZTE5LWExN2MtNDBlMjY1ZmZkYjU3XkEyXkFqcGdeQXVyNjMwNzk3Mjk@._V1_SX300.jpg" alt="" />
+        <div className="flex items-center p-3 gap-6 bg-[#706d6d4d]">
+            <div className="h-auto w-28">
+                <img src={Poster ? Poster : "https://m.media-amazon.com/images/M/MV5BMjE0NGIwM2EtZjQxZi00ZTE5LWExN2MtNDBlMjY1ZmZkYjU3XkEyXkFqcGdeQXVyNjMwNzk3Mjk@._V1_SX300.jpg"} alt="" />
             </div>
             <div className="text-white">
-                <h1 className="font-bold text-xl">Inception</h1>
-                <p className="text-[15px]">16 Jul 2010 - 148 min</p>
-                <p className="text-[15px]">Action, Adventure, Sci-Fri</p>
+                <h3 className="font-bold text-xl">{Title ? Title : "Inception"}</h3>
+                <p className="text-[17px] font-medium py-1">{Released ? Released : '07 Jan 2020'} - {Runtime ? Runtime : '15 min'}</p>
+                <p className="text-[17px] font-medium ">{Genre ? Genre : 'Action, Adventure, Sci-Fri'}</p>
                 <div className="flex items-center gap-2">
                     <FaStar className="text-yellow-300" />
-                    <p >8.8 IMDB rating</p>
+                    <p className="text-[17px] font-medium py-1">{imdbRating ? imdbRating : 8.9} IMDB rating</p>
                 </div>
             </div>
         </div>
-        <div className="flex w-fit mx-auto gap-2 items-center mt-4 bg-[#706d6d] p-3 rounded">
-            {
-                starBar.map((val,ind) => {
-                    return <p className="text-[21px] text-yellow-300" key={ind}>{val}</p>
-                })
+        <div className="w-fit mx-auto mt-4 bg-[#706d6d] p-3 rounded">
+            <div className="flex gap-2 items-center ">
+                {
+                    starBar.map((ind) => {
+                        return <p className="text-[21px] cursor-pointer text-[#ccc8c8]" 
+                        key={ind}
+                        onMouseEnter={() => setHoverIndex(ind)}
+                        onMouseLeave={() => setHoverIndex(null)}
+                        onClick={() => {
+                            setSelectRating(ind)
+                            setShowBtn(true)
+                            setUserRating(ind);
+                        }}
+                            >  <FaStar className={`${hoverindex >= ind || selectRateing >= ind ? 'text-yellow-300' :'' } `} /></p>
+                        })
+                    }
+                <p className="text-yellow-300 font-semibold text-xl">{hoverindex ? hoverindex : selectRateing}</p>
+            </div>   
+            { showBtn &&
+                <div className="text-center mt-2">
+                    <button onClick={() => {
+                        setIsHideWatchMovie(true)
+                    }} type="button" className="text-white text-[17px] shadow-lg bg-purple-500 hover:bg-purple-600 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-12 py-2 text-center inline-flex items-center ">
+                    <FaPlus className="mx-2" /> Add to List</button>
+                </div>
             }
-            <p className="text-yellow-300 font-semibold text-xl">9</p>
-        </div>   
+        </div>
         <div className="text-white px-5 py-2 text-[15px]">
             <p>This Inception prequel unfolds courtesy of a beautiful Motion Comic, and explains how Cobb, Arthur and Nash were enlisted by Cobol Engineering. Diehard fans of the film will be especially interested in this one.</p>
             <p className="py-2">Starring Leonardo DiCaprio, Joseph Gordon-Levitt, Lukas Haas</p>
