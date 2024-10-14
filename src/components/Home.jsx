@@ -8,7 +8,7 @@ function Home(){
   const[isHideWatchMovie, setIsHideWatchMovie] = useState(true);
   const[showSelectWatchMovie, setShowSelectWatchMovie] = useState(null)
   const[isLoader, setIsLoader] = useState(false);
-  
+    
   const [watchMovie, setWatchMovie] = useState([
     {title: "Inception", Poster:"https://st2.depositphotos.com/4431055/11471/i/380/depositphotos_114715830-stock-photo-books-on-wooden-table.jpg", userRating: 0, imdbRating: "0.0", runTime: '50 min'}
   ]);

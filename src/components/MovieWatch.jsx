@@ -10,10 +10,6 @@ function MovieWatch({movieId, isHideWatchMovie, setIsHideWatchMovie, showSelectW
     const [isVisible, setIsVisible] = useState(true);
     const[userRating, setUserRating] = useState(0);
 
-    const handleHide = () => {
-        setIsVisible(false);
-    };
-
     useEffect(() => {
         async function fetchSelectMovie() {
           try {
@@ -42,7 +38,7 @@ function MovieWatch({movieId, isHideWatchMovie, setIsHideWatchMovie, showSelectW
                     </div>
                     {isVisible && watchMovie && (
                         watchMovie.map((val, id) => {
-                            return <SelectMovieWatchList key={id} title={val.Title} img={val.Poster} imdbRating={val.imdbRating} runTime={val.Runtime} handleHide={handleHide} userRating={userRating} />
+                            return <SelectMovieWatchList watchMovie={watchMovie} setWatchMovie={setWatchMovie} key={id} id={id} title={val.Title} img={val.Poster} imdbRating={val.imdbRating} runTime={val.Runtime} userRating={userRating} />
                         })
                     )}
                 </div>
@@ -77,7 +73,7 @@ const MovieStats = ({watchMovie}) => {
         </>
     );
 };
-const SelectMovieWatchList = ({ title, img, runTime, imdbRating, handleHide, userRating }) => {
+const SelectMovieWatchList = ({ title, img, runTime, imdbRating, userRating, watchMovie, setWatchMovie, id}) => {
     return (
         <div className='flex justify-between items-center gap-4 shadow-lg p-3 border-b-2 border-b-[#ffffff6b] rounded cursor-pointer hover:bg-[rgba(117,116,116,0.93)]'>
             <div className='h-auto'>
@@ -106,7 +102,11 @@ const SelectMovieWatchList = ({ title, img, runTime, imdbRating, handleHide, use
             </div>
             <div>
                 <RxCrossCircled
-                    onClick={handleHide}
+                // setiS
+                    onClick={() => {
+                        const updateWatchMovie = watchMovie.filter((_, movieId) => movieId != id );
+                        setWatchMovie(updateWatchMovie)
+                    }}
                     className="text-red-600 text-[23px] hover:text-black hover:scale-110 duration-300 ease-in-out"
                 />
             </div>
