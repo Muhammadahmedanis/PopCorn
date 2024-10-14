@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
+import { LuArrowLeftCircle } from "react-icons/lu";
 
-function DetailMovie({setIsHideWatchMovie, setUserRating, showSelectWatchMovie}){
+function DetailMovie({setIsHideWatchMovie, setUserRating, showSelectWatchMovie, setWatchMovie}){
     const starBar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; 
     const[hoverindex, setHoverIndex] = useState(null);
     const[selectRateing, setSelectRating] = useState(0)
@@ -10,7 +11,12 @@ function DetailMovie({setIsHideWatchMovie, setUserRating, showSelectWatchMovie})
     const {Title, Poster, Released, Runtime, Genre, imdbRating} = showSelectWatchMovie
     return(
         <>
-        <div className="flex items-center p-3 gap-6 bg-[#706d6d4d]">
+        <div className="bg-[#706d6d4d]">
+         <button onClick={() => setIsHideWatchMovie(true)} className="float-end m-2">
+                <LuArrowLeftCircle className='text-white font-extrabold text-[25px]' />
+            </button>
+        <div className="flex items-center p-1 gap-6 ">
+            
             <div className="h-auto w-28">
                 <img src={Poster ? Poster : "https://m.media-amazon.com/images/M/MV5BMjE0NGIwM2EtZjQxZi00ZTE5LWExN2MtNDBlMjY1ZmZkYjU3XkEyXkFqcGdeQXVyNjMwNzk3Mjk@._V1_SX300.jpg"} alt="" />
             </div>
@@ -23,6 +29,8 @@ function DetailMovie({setIsHideWatchMovie, setUserRating, showSelectWatchMovie})
                     <p className="text-[17px] font-medium py-1">{imdbRating ? imdbRating : 8.9} IMDB rating</p>
                 </div>
             </div>
+        </div>
+       
         </div>
         <div className="w-fit mx-auto mt-4 bg-[#706d6d] p-3 rounded">
             <div className="flex gap-2 items-center ">
@@ -46,7 +54,9 @@ function DetailMovie({setIsHideWatchMovie, setUserRating, showSelectWatchMovie})
                 <div className="text-center mt-2">
                     <button onClick={() => {
                         setIsHideWatchMovie(true)
-                    }} type="button" className="text-white text-[17px] shadow-lg bg-purple-500 hover:bg-purple-600 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 font-medium rounded-lg text-sm px-12 py-2 text-center inline-flex items-center ">
+                        setWatchMovie(prevData => [...prevData, showSelectWatchMovie]);
+                        console.log(showSelectWatchMovie);
+                    }} type="button" className="font-semibold text-white text-[19px] shadow-lg bg-purple-500 hover:bg-purple-600 focus:ring-4 focus:outline-none focus:ring-[#3b5998]/50 rounded-lg text-sm px-12 py-2 text-center inline-flex items-center ">
                     <FaPlus className="mx-2" /> Add to List</button>
                 </div>
             }

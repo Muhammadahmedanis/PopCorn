@@ -6,8 +6,7 @@ import { GiSandsOfTime } from "react-icons/gi";
 import { RxCrossCircled } from "react-icons/rx";
 import DetailMovie from './DetailMovie';
 
-function MovieWatch({ movieId, isHideWatchMovie, setIsHideWatchMovie, showSelectWatchMovie, setShowSelectWatchMovie}) {
-const [watchMovie, setWatchMovie] = useState([]);
+function MovieWatch({movieId, isHideWatchMovie, setIsHideWatchMovie, showSelectWatchMovie, setShowSelectWatchMovie, setWatchMovie, watchMovie}) {
     const [isVisible, setIsVisible] = useState(true);
     const[userRating, setUserRating] = useState(0);
 
@@ -22,7 +21,6 @@ const [watchMovie, setWatchMovie] = useState([]);
               if(res.ok){
                   const data = await res.json()
                   if(data.Response != false)
-                  setWatchMovie(prevData => [...prevData, data]);
                   setShowSelectWatchMovie(data);
                 }
           } catch (error) {
@@ -30,14 +28,14 @@ const [watchMovie, setWatchMovie] = useState([]);
           }  
         }
         fetchSelectMovie()
-    }, [movieId]);
+    }, [movieId])
 
     return (
         <div className='h-auto mb-4 w-96 bg-[rgba(69,68,68,0.93)] rounded'>
             {isHideWatchMovie ? (
                 <div>
                     <div className='shadow-sm shadow-slate-100 px-4 py-2'>
-                        <p className='text-white font-semibold py-1'>MOVIES YOU WATCHED</p>
+                            <h4 className='text-white font-semibold py-1'>MOVIES YOU WATCHED</h4>
                         <div className='flex gap-4'>
                             <MovieStats watchMovie={watchMovie} />
                         </div>
@@ -49,7 +47,7 @@ const [watchMovie, setWatchMovie] = useState([]);
                     )}
                 </div>
             ) : (
-                <DetailMovie showSelectWatchMovie={showSelectWatchMovie} setIsHideWatchMovie={setIsHideWatchMovie} setUserRating={setUserRating} />
+                <DetailMovie setWatchMovie={setWatchMovie} showSelectWatchMovie={showSelectWatchMovie} setIsHideWatchMovie={setIsHideWatchMovie} setUserRating={setUserRating} />
             )}
         </div>
     );
@@ -90,7 +88,7 @@ const SelectMovieWatchList = ({ title, img, runTime, imdbRating, handleHide, use
                 />
             </div>
             <div className='text-white'>
-                <h3 className='font-bold'>{title || "Inception"}</h3>
+                <h1 className='font-bold py-2 text-[20px]'>{title || "Inception"}</h1>
                 <div className='flex gap-3'>
                     <div className='flex items-center gap-2'>
                         <FaStar className='text-yellow-300' />
@@ -115,3 +113,4 @@ const SelectMovieWatchList = ({ title, img, runTime, imdbRating, handleHide, use
         </div>
     );
 };
+
